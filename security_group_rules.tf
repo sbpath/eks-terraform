@@ -18,6 +18,27 @@ resource "aws_security_group_rule" "tf-eks-node-ingress-workstation-https" {
   type              = "ingress"
 }
 
+resource "aws_security_group_rule" "tf-eks-lb-ingress-workstation-http" {
+  cidr_blocks       = ["0.0.0.0/0" ]
+  description       = "Allow workstation to communicate with the NLB"
+  from_port         = 80
+  protocol          = "tcp"
+  security_group_id = aws_security_group.tf-eks-lb.id
+  to_port           = 80
+  type              = "ingress"
+}
+
+resource "aws_security_group_rule" "tf-eks-lb-ingress-node-32080" {
+  cidr_blocks       = ["0.0.0.0/0" ]
+  description       = "Allow NLB to communicate with worker nodes"
+  from_port         = 32080
+  protocol          = "tcp"
+  security_group_id = aws_security_group.tf-eks-node.id
+  to_port           = 32080
+  type              = "ingress"
+}
+
+
 
 resource "aws_security_group_rule" "tf-eks-node-ingress-self" {
   description              = "Allow nodes to communicate with each other"

@@ -35,5 +35,23 @@ resource "aws_security_group" "tf-eks-node" {
 }
 
 
+resource "aws_security_group" "tf-eks-lb" {
+    name        = "terraform-eks-lb"
+    description = "Security group for all NLB"
+    vpc_id      = aws_vpc.EKSTerraform.id
+
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+
+    tags = {
+        Name = "EKSTerraform-nlb-SG"
+    }
+}
+
+
 
 

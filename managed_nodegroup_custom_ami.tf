@@ -8,9 +8,9 @@ resource "aws_eks_node_group" "node1" {
     version = aws_launch_template.custom.latest_version
   }
   scaling_config {
-    desired_size = 1
-    max_size     = 1
-    min_size     = 1
+    desired_size = 3
+    max_size     = 4
+    min_size     = 3
   }
   depends_on = [ aws_eks_cluster.tf_eks ]
 }
